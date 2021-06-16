@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 AWS.config.update({ region: 'us-east-2' });
+const baseUrl = process.env.BASE_URL;
 
 async function upload(file, name, bucket) {
   const uploadParams = { Bucket: bucket, Key: name, Body: file };
@@ -12,7 +13,7 @@ async function upload(file, name, bucket) {
         return reject(err);
       }
 
-      return resolve(name);
+      return resolve(`${baseUrl}/${name}`);
     });
   });
 }
